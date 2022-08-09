@@ -17,7 +17,9 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'group_id' => $this->faker->optional(0.9)->numberBetween(1 - 10)
         ];
     }
 }

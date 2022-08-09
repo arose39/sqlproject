@@ -17,7 +17,8 @@ class StudentCourseFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'student_id' => $this->numberBetween(1 - 200),
+            'course_id' => $this->numberBetween(1 - 10),
         ];
     }
 }
