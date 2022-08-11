@@ -19,29 +19,30 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/students', function () {
 
-Route::get('/groups', function (){
+    $students = \App\Models\Student::all();
+    echo '<pre>';
+    foreach ($students as $student) {
+       var_dump($student->toArray());
+        var_dump($student->courses->toArray());
+       var_dump($student->group->toArray());
 
-})->name('groups');
 
-Route::get('/groups/{id}', function (){
-
-})->name('group_students');
-
-Route::get('/students', function (){
+    }
 
 })->name('students');
 
-Route::get('/students/{id}', function (){
+Route::get('/students/{id}', function () {
 
 })->name('student_info');
 
-Route::get('/courses', function (){
+Route::get('/groups', function () {
+
+})->name('groups');
+
+Route::get('/courses', function () {
 
 })->name('courses');
-
-Route::get('/courses/{id}', function (){
-
-})->name('course_students');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

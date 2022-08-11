@@ -9,11 +9,18 @@ class Student extends Model
 {
     use HasFactory;
 
-    public function courses(){
-        return $this->belongsToMany(Course::class);
+    public function courses()
+    {
+        return $this->belongsToMany(
+            Course::class,
+            'student_course',
+            'student_id',
+            'course_id'
+        );
     }
 
-    public function group(){
-        return $this->belongsTo(Group::class);
+    public function group()
+    {
+        return $this->belongsTo(Group::class)->withDefault();
     }
 }
