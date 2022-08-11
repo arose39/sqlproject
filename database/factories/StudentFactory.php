@@ -16,10 +16,17 @@ class StudentFactory extends Factory
      */
     public function definition()
     {
+        $firstNames = [];
+        $lastNames = [];
+        for ($i = 0; $i < 20; $i++) {
+            $firstNames[] = $this->faker->firstName;
+            $lastNames[] = $this->faker->firstName;
+        }
+
         return [
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'group_id' => $this->faker->optional(0.9)->numberBetween(1 - 10)
+            'first_name' => $this->faker->randomElement($firstNames),
+            'last_name' => $this->faker->randomElement($lastNames),
+            'group_id' => $this->faker->optional($weight = 0.9)->numberBetween(1, 10)
         ];
     }
 }

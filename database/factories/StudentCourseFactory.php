@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StudentCourse>
  */
@@ -17,8 +18,8 @@ class StudentCourseFactory extends Factory
     public function definition()
     {
         return [
-            'student_id' => $this->numberBetween(1 - 200),
-            'course_id' => $this->numberBetween(1 - 10),
+            'student_id' => $this->faker->numberBetween(1, 200),
+            'course_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+
+    public function courses(){
+        return $this->belongsToMany(Course::class);
+    }
+
+    public function group(){
+        return $this->belongsTo(Group::class);
+    }
 }
