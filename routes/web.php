@@ -22,14 +22,9 @@ Auth::routes();
 Route::get('/students', function () {
 
     $students = \App\Models\Student::all();
-    echo '<pre>';
-    foreach ($students as $student) {
-       var_dump($student->toArray());
-        var_dump($student->courses->toArray());
-       var_dump($student->group->toArray());
 
+        return view('studentslist', ['students'=>$students]);
 
-    }
 
 })->name('students');
 
@@ -38,11 +33,13 @@ Route::get('/students/{id}', function () {
 })->name('student_info');
 
 Route::get('/groups', function () {
-
+    $groups = \App\Models\Group::all();
+    return view('groups', ['groups'=>$groups]);
 })->name('groups');
 
 Route::get('/courses', function () {
-
+    $courses = \App\Models\Course::all();
+    return view('courses', ['courses'=>$courses]);
 })->name('courses');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
