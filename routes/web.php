@@ -19,14 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/students', function () {
-
-    $students = \App\Models\Student::all();
-
-        return view('studentslist', ['students'=>$students]);
-
-
-})->name('students');
+Route::resource('/students', \App\Http\Controllers\StudentController::class);
 
 Route::get('/students/{id}', function () {
 
@@ -34,12 +27,12 @@ Route::get('/students/{id}', function () {
 
 Route::get('/groups', function () {
     $groups = \App\Models\Group::all();
-    return view('groups', ['groups'=>$groups]);
+    return view('groups.groups', ['groups'=>$groups]);
 })->name('groups');
 
 Route::get('/courses', function () {
     $courses = \App\Models\Course::all();
-    return view('courses', ['courses'=>$courses]);
+    return view('courses.courses', ['courses'=>$courses]);
 })->name('courses');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

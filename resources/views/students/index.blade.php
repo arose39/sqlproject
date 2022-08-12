@@ -1,6 +1,16 @@
 @extends('layouts/layout')
 @section('title') Students list @endsection
 @section('main_content')
+    <a class="btn btn-block btn-info btn-lg" href="{{route('students.create')}}">
+        Create new student
+    </a>
+    <div>
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>
     <h1>Students list</h1>
     <table class="table table-striped">
         <thead>
