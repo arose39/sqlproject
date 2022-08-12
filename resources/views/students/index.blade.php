@@ -20,6 +20,7 @@
             <th scope="col">Last</th>
             <th scope="col">Group</th>
             <th scope="col">Courses</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +34,21 @@
                     @foreach($student->courses as $course)
                     {{$course['name']}} <br>
                     @endforeach
+                </td>
+                <td class="project-actions text-right">
+                    <a class="btn btn-info btn-sm" href="{{route('students.edit', $student->id)}}">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Edit
+                    </a>
+                    <form action="{{route('students.destroy', $student->id)}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach
