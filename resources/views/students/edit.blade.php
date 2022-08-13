@@ -42,41 +42,18 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="mr-sm-2" for="first_course">first course(mandatory)</label>
-                <select class="custom-select mr-sm-2" name="first_course" id="first_course">
-                    <option value="">Choose...</option>
+                <label class="mr-sm-2" for="courses">course(to add more than one course: hold CTRL and point to the
+                    courses)</label>
+                <select class="custom-select mr-sm-2" name="courses[]" id="courses" multiple>
                     @foreach($courses as $course)
                         <option value="{{$course['id']}}"
-                                @if($student->courses[0]['name']===$course['name'])
-                                selected @endif >
-                            {{$course['name']}}
-                        </option>
-                    @endforeach
-                </select>
-                <label class="mr-sm-2" for="second_course">second course(optional)</label>
-                <select class="custom-select mr-sm-2" name="second_course" id="second_course">
-                    <option value="" @if(!isset($student->courses[1]['name'])) selected @endif>Choose...</option>
-                    @foreach($courses as $course)
-                        <option value="{{$course['id']}}"
-                                @if(isset($student->courses[1]['name']) && $student->courses[1]['name']===$course['name'])
-                                selected @endif >
-                            {{$course['name']}}
-                        </option>
-                    @endforeach
-                </select>
-                <label class="mr-sm-2" for="third_course">third course(optional)</label>
-                <select class="custom-select mr-sm-2" name="third_course" id="third_course">
-                    <option value="" @if(!isset($student->courses[2]['name'])) selected @endif>Choose...</option>
-                    @foreach($courses as $course)
-                        <option value="{{$course['id']}}"
-                                @if(isset($student->courses[2]['name']) && $student->courses[2]['name']===$course['name'])
-                                selected @endif>
-                            {{$course['name']}}
-                        </option>
+                                @foreach($student->courses as $studentCourse)
+                                @if ($studentCourse['name']===$course['name']) selected @endif
+                            @endforeach
+                        >{{$course['name']}}</option>
                     @endforeach
                 </select>
             </div>
-
         </div>
         <!-- /.card-body -->
 

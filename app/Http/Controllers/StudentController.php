@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Student\CreateStudentGroupAction;
+use App\Actions\Student\UpdateStudentGroupAction;
+use App\Http\Requests\StudentRequest;
 use App\Models\Course;
 use App\Models\Group;
 use App\Models\Student;
-use App\Models\StudentCourse;
-use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
@@ -18,6 +19,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::orderBy('first_name')->get();
+
         return view('students.index', ['students' => $students]);
     }
 
@@ -30,49 +32,19 @@ class StudentController extends Controller
     {
         $groups = Group::orderBy('id')->get();
         $courses = Course::orderBy('name')->get();
+
         return view('students.create', ['groups' => $groups, 'courses' => $courses]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\StudentRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request, CreateStudentGroupAction $createStudentGroupAction)
     {
-        $request->validate([
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'first_course' => 'required',
-            'second_course' => "nullable|different:first_course",
-            'third_course' => "nullable|different:second_course|different:second_course",
-        ]);
-
-        $newStudent = new Student;
-        $newStudent->first_name = $request->input('first_name');
-        $newStudent->last_name = $request->input('last_name');
-        $newStudent->group_id = $request->input('group');
-        $newStudent->save();
-
-
-        $firstStudentCourse = new StudentCourse;
-        $firstStudentCourse->student_id = $newStudent['id'];
-        $firstStudentCourse->course_id = $request->input('first_course');
-        $firstStudentCourse->save();
-
-        if ($request->input('second_course')) {
-            $secondStudentCourse = new StudentCourse;
-            $secondStudentCourse->student_id = $newStudent['id'];
-            $secondStudentCourse->course_id = $request->input('second_course');
-            $secondStudentCourse->save();
-        }
-        if ($request->input('third_course')) {
-            $thirdStudentCourse = new StudentCourse;
-            $thirdStudentCourse->student_id = $newStudent['id'];
-            $thirdStudentCourse->course_id = $request->input('third_course');
-            $thirdStudentCourse->save();
-        }
+        $newStudent = $createStudentGroupAction($request->all());
         session()->flash(
             'message',
             "Student $newStudent->first_name $newStudent->last_name  was successfully added"
@@ -85,11 +57,13 @@ class StudentController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        //
+        $student = Student::find($id);
+
+        return view('students.show', ['student' => $student]);
     }
 
     /**
@@ -103,6 +77,7 @@ class StudentController extends Controller
         $student = Student::find($id);
         $groups = Group::orderBy('id')->get();
         $courses = Course::orderBy('name')->get();
+
         return view('students.edit', [
             'student' => $student,
             'groups' => $groups,
@@ -117,40 +92,9 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(StudentRequest $request, string $id, UpdateStudentGroupAction $updateStudentGroupAction)
     {
-        $request->validate([
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'first_course' => 'required',
-            'second_course' => "nullable|different:first_course",
-            'third_course' => "nullable|different:second_course|different:second_course",
-        ]);
-
-        $updatedStudent = Student::find($id);
-        $updatedStudent->first_name = $request->input('first_name');
-        $updatedStudent->last_name = $request->input('last_name');
-        $updatedStudent->group_id = $request->input('group');
-        $updatedStudent->save();
-
-        StudentCourse::where('student_id', $id)->delete();
-        $firstStudentCourse = new StudentCourse;
-        $firstStudentCourse->student_id = $updatedStudent['id'];
-        $firstStudentCourse->course_id = $request->input('first_course');
-        $firstStudentCourse->save();
-
-        if ($request->input('second_course')) {
-            $secondStudentCourse = new StudentCourse;
-            $secondStudentCourse->student_id = $updatedStudent['id'];
-            $secondStudentCourse->course_id = $request->input('second_course');
-            $secondStudentCourse->save();
-        }
-        if ($request->input('third_course')) {
-            $thirdStudentCourse = new StudentCourse;
-            $thirdStudentCourse->student_id = $updatedStudent['id'];
-            $thirdStudentCourse->course_id = $request->input('third_course');
-            $thirdStudentCourse->save();
-        }
+        $updatedStudent = $updateStudentGroupAction($id, $request->all());
         session()->flash(
             'message',
             "Student $updatedStudent->first_name $updatedStudent->last_name  was successfully edited"
@@ -168,10 +112,8 @@ class StudentController extends Controller
     public function destroy($id)
     {
         Student::find($id)->delete();
-        session()->flash(
-            'message',
-            "Student   was successfully deleted"
-        );
+        session()->flash('message', "Student $id was successfully deleted");
+
         return redirect()->route('students.index');
     }
 }

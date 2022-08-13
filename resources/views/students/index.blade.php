@@ -41,6 +41,11 @@
                         </i>
                         Edit
                     </a>
+                    <a class="btn btn-info btn-sm" href="{{route('students.show', $student->id)}}">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Info
+                    </a>
                     <form action="{{route('students.destroy', $student->id)}}" method="POST">
                         @csrf
                         @method('DELETE')

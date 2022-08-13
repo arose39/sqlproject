@@ -2,8 +2,6 @@
 @section('title') Create student @endsection
 @section('main_content')
     <h1>Create student</h1>
-
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -35,30 +33,14 @@
                 </select>
             </div>
             <div class="form-group">
-
-                <label class="mr-sm-2" for="first_course">first course(mandatory)</label>
-                <select class="custom-select mr-sm-2" name="first_course" id="first_course">
-                    <option value="" selected>Choose...</option>
-                    @foreach($courses as $course)
-                        <option value="{{$course['id']}}">{{$course['name']}}</option>
-                    @endforeach
-                </select>
-                <label class="mr-sm-2" for="second_course">second course(optional)</label>
-                <select class="custom-select mr-sm-2" name="second_course" id="second_course">
-                    <option value="" selected>Choose...</option>
-                    @foreach($courses as $course)
-                        <option value="{{$course['id']}}">{{$course['name']}}</option>
-                    @endforeach
-                </select>
-                <label class="mr-sm-2" for="third_course">third course(optional)</label>
-                <select class="custom-select mr-sm-2" name="third_course" id="third_course">
-                    <option value="" selected>Choose...</option>
+                <label class="mr-sm-2" for="courses">course(to add more than one course: hold CTRL and point to the
+                    courses)</label>
+                <select class="custom-select mr-sm-2" name="courses[]" id="courses" multiple>
                     @foreach($courses as $course)
                         <option value="{{$course['id']}}">{{$course['name']}}</option>
                     @endforeach
                 </select>
             </div>
-
         </div>
         <!-- /.card-body -->
 
