@@ -2,15 +2,16 @@
 
 namespace App\Actions\Student;
 
-use App\Actions\Student\AddCoursesToStudentAction;
-use App\Actions\Student\CreateStudentAction;
+use App\Contracts\AddStudentCoursesActionContract;
+use App\Contracts\CreateStudentActionContract;
+use App\Contracts\CreateStudentGroupActionContract;
 use App\Models\Student;
 
-class CreateStudentGroupAction
+class CreateStudentGroupAction implements CreateStudentGroupActionContract
 {
     public function __construct(
-        private CreateStudentAction $createStudentAction,
-        private AddCoursesToStudentAction $addCoursesToStudentAction
+        private CreateStudentActionContract $createStudentAction,
+        private AddStudentCoursesActionContract $addCoursesToStudentAction
     )
     {
     }
@@ -20,7 +21,7 @@ class CreateStudentGroupAction
         $student = ($this->createStudentAction)($data);
         $addingCoursesStatus = ($this->addCoursesToStudentAction)($student, $data['courses']);
 
-        if($addingCoursesStatus){
+        if ($addingCoursesStatus) {
             return $student;
         }
 

@@ -2,9 +2,10 @@
 
 namespace App\Actions\Student;
 
+use App\Contracts\CreateStudentActionContract;
 use App\Models\Student;
 
-class CreateStudentAction
+class CreateStudentAction implements CreateStudentActionContract
 {
     public function __invoke(array $data): Student
     {

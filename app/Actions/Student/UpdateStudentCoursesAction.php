@@ -2,12 +2,12 @@
 
 namespace App\Actions\Student;
 
+use App\Contracts\UpdateStudentCoursesActionContract;
 use App\Models\Student;
 use App\Models\StudentCourse;
 
-class UpdateStudentCoursesAction
+class UpdateStudentCoursesAction implements UpdateStudentCoursesActionContract
 {
-
     public function __invoke(Student $student, array $courses): bool
     {
         StudentCourse::where('student_id', $student->id)->delete();

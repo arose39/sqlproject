@@ -2,9 +2,10 @@
 
 namespace App\Actions\Student;
 
+use App\Contracts\UpdateStudentActionContract;
 use App\Models\Student;
 
-class UpdateStudentAction
+class UpdateStudentAction implements UpdateStudentActionContract
 {
     public function __invoke(string $studentId, array $data): Student
     {

@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Actions\Student\CreateStudentGroupAction;
-use App\Actions\Student\UpdateStudentGroupAction;
+use App\Contracts\CreateStudentGroupActionContract;
+use App\Contracts\UpdateStudentGroupActionContract;
 use App\Http\Requests\StudentRequest;
 use App\Models\Course;
 use App\Models\Group;
@@ -39,10 +39,11 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\StudentRequest $request
+     * @param StudentRequest $request
+     * @param CreateStudentGroupActionContract $createStudentGroupAction
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StudentRequest $request, CreateStudentGroupAction $createStudentGroupAction)
+    public function store(StudentRequest $request, CreateStudentGroupActionContract $createStudentGroupAction)
     {
         $newStudent = $createStudentGroupAction($request->all());
         session()->flash(
@@ -90,9 +91,10 @@ class StudentController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
+     * @param UpdateStudentGroupActionContract $updateStudentGroupAction
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(StudentRequest $request, string $id, UpdateStudentGroupAction $updateStudentGroupAction)
+    public function update(StudentRequest $request, string $id, UpdateStudentGroupActionContract $updateStudentGroupAction)
     {
         $updatedStudent = $updateStudentGroupAction($id, $request->all());
         session()->flash(

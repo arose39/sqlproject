@@ -2,13 +2,16 @@
 
 namespace App\Actions\Student;
 
+use App\Contracts\UpdateStudentActionContract;
+use App\Contracts\UpdateStudentCoursesActionContract;
+use App\Contracts\UpdateStudentGroupActionContract;
 use App\Models\Student;
 
-class UpdateStudentGroupAction
+class UpdateStudentGroupAction implements UpdateStudentGroupActionContract
 {
     public function __construct(
-        private UpdateStudentAction $updateStudentAction,
-        private UpdateStudentCoursesAction $updateStudentCoursesAction
+        private UpdateStudentActionContract $updateStudentAction,
+        private UpdateStudentCoursesActionContract $updateStudentCoursesAction
     )
     {
     }

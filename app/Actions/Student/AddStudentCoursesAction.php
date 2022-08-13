@@ -2,10 +2,11 @@
 
 namespace App\Actions\Student;
 
+use App\Contracts\AddStudentCoursesActionContract;
 use App\Models\Student;
 use App\Models\StudentCourse;
 
-class AddCoursesToStudentAction
+class AddStudentCoursesAction implements AddStudentCoursesActionContract
 {
     public function __invoke(Student $student, array $courses): bool
     {
