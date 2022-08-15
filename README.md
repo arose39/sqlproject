@@ -8,6 +8,12 @@
 Для выполнения миграций и наполнений таблиц пропишите комануду
  - sail artisan migrate --seed
 
+Для віполнения тестов
+ -  sail artisan test
+
+code coverage in dir /coverage
+
+.env не добавлен в .gitignore для удобства.
 
 RESTapi:
 для проверки работы API в программе POSTMAN 
