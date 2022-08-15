@@ -10,7 +10,7 @@ class UpdateStudentAction implements UpdateStudentActionContract
     public function __invoke(string $studentId, array $data): ?Student
     {
         $updatedStudent = Student::find($studentId);
-        if(!$updatedStudent){
+        if (!$updatedStudent) {
             return null;
         }
         $updatedStudent->first_name = $data['first_name'];

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Database\Factories;
 
@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CourseFactory extends Factory
 {
-    public $courseNames = [
+    public array $courseNames = [
         'math', 'Biology', 'programming', 'Economy', 'Macroeconomy',
         'Microeconomy', 'Painting', 'Physical trainings', 'Design ', 'Art & Design',
         'Design & Creativity', 'Business', 'Negotiation', 'Business Intelligence',
@@ -23,7 +23,7 @@ class CourseFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->unique()->randomElement($this->courseNames),

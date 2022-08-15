@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Http\Resources;
 
@@ -22,7 +22,7 @@ class ShowOneStudentResource extends JsonResource
             "group_id" => $this->group_id,
             "created_at" => $this->created_at->format('d-m-Y H-m-i'),
             "updated_at" => $this->updated_at->format('d-m-Y H-m-i'),
-            'courses' => $this->courses->pluck('name','id'),
+            'courses' => $this->courses->pluck('name', 'id'),
         ];
     }
 }

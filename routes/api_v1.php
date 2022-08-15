@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CourseController;
+use App\Http\Controllers\Api\V1\GroupController;
 use App\Http\Controllers\Api\V1\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('students', StudentController::class);
+
+Route::get('courses', CourseController::class);
+
+Route::get('groups', GroupController::class);

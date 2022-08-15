@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Filters;
 
@@ -7,21 +7,21 @@ use Illuminate\Http\Request;
 
 class QueryFilter
 {
-    public $request;
-    protected $builder;
-    protected $delimiter = ',';
+    public Request $request;
+    protected Builder $builder;
+    protected string $delimiter = ',';
 
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
 
-    public function filters()
+    public function filters(): array|string
     {
         return $this->request->query();
     }
 
-    public function apply(Builder $builder)
+    public function apply(Builder $builder): Builder
     {
         $this->builder = $builder;
 

@@ -44,4 +44,9 @@ RESTapi:
 Передайте form-data в body
 - _method - delete
 
+Для вывода всех курсов:
+ - http://localhost/api/v1/courses method GET
+
+Для вывода всех груп
+ - http://localhost/api/v1/groups method GET
 
