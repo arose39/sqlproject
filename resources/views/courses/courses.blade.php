@@ -7,8 +7,9 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
-            <th scope="col">Descriptio</th>
+            <th scope="col">Description</th>
             <th scope="col">Quantity of students</th>
+            <th scope="col">Show students</th>
         </tr>
         </thead>
         <tbody>
@@ -18,6 +19,13 @@
                 <td>{{$course['name']}}</td>
                 <td>{{$course['description']}}</td>
                 <td>{{$course->students->count()}}</td>
+                <td>
+                    <a class="btn btn-info btn-sm" href="{{route('students.index', ['course_id' => $course['id']])}}">
+                        <i class="fas fa-pencil-alt">
+                        </i>
+                        Show course`s students
+                    </a>
+                </td>
             </tr>
         @endforeach
         </tbody>

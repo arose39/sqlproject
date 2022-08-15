@@ -25,14 +25,8 @@ Route::get('/students/{id}', function () {
 
 })->name('student_info');
 
-Route::get('/groups', function () {
-    $groups = \App\Models\Group::all();
-    return view('groups.groups', ['groups'=>$groups]);
-})->name('groups');
+Route::get('/groups', [\App\Http\Controllers\GroupController::class, 'index'] )->name('groups');
 
-Route::get('/courses', function () {
-    $courses = \App\Models\Course::all();
-    return view('courses.courses', ['courses'=>$courses]);
-})->name('courses');
+Route::get('/courses', [\App\Http\Controllers\CourseController::class, 'index'])->name('courses');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

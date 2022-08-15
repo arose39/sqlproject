@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\CreateStudentGroupActionContract;
 use App\Contracts\UpdateStudentGroupActionContract;
+use App\Filters\StudentFilter;
 use App\Http\Requests\StudentRequest;
 use App\Models\Course;
 use App\Models\Group;
@@ -16,11 +17,13 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(StudentFilter $studentFilter)
     {
-        $students = Student::orderBy('first_name')->paginate(15);
+        $students = Student::filter($studentFilter)->orderBy('first_name')->paginate(15);
+        $groups = Group::orderBy('id')->get();
+        $courses = Course::orderBy('name')->get();
 
-        return view('students.index', ['students' => $students]);
+        return view('students.index', ['groups' => $groups, 'students' => $students, 'courses' => $courses]);
     }
 
     /**

@@ -12,6 +12,50 @@
         @endif
     </div>
     <h1>Students list</h1>
+
+    <form action="{{route('students.index')}}" method="get">
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Search student by first name</label>
+            <input name="search_first_name"
+                   @if(isset($_GET['search_first_name'])) value="{{$_GET['search_first_name']}}"
+                   @endif type="text" class="form-control" id="exampleFormControlInput1" placeholder="Type first name">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Search student by last name</label>
+            <input name="search_last_name" @if(isset($_GET['search_last_name'])) value="{{$_GET['search_last_name']}}"
+                   @endif type="text" class="form-control" id="exampleFormControlInput1" placeholder="Type last name">
+        </div>
+        <div class="mb-3">
+            <div class="form-label">Choose group</div>
+            <select name="group_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option></option>
+                <option value="n/a"
+                        @if(isset($_GET['group_id'])) @if($_GET['group_id'] == 'n/a') selected @endif @endif>
+                    Not assigned
+                </option>
+                @foreach($groups as $group)
+                    <option value="{{$group->id}}" @if(isset($_GET['group_id']))
+                    @if($_GET['group_id'] == $group->id) selected @endif @endif>
+                        {{$group->name}}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mb-3">
+            <div class="form-label">Choose course</div>
+            <select name="course_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                <option></option>
+                @foreach($courses as $course)
+                    <option value="{{$course->id}}" @if(isset($_GET['course_id']))
+                    @if($_GET['course_id'] == $course->id) selected @endif @endif>
+                        {{$course->name}}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
     <table class="table table-striped">
         <thead>
         <tr>
@@ -32,7 +76,7 @@
                 <td>{{$student->group['name']??"Not assigned"}}</td>
                 <td>
                     @foreach($student->courses as $course)
-                    {{$course['name']}} <br>
+                        {{$course['name']}} <br>
                     @endforeach
                 </td>
                 <td class="project-actions text-right">
