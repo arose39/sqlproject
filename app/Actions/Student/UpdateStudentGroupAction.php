@@ -16,9 +16,12 @@ class UpdateStudentGroupAction implements UpdateStudentGroupActionContract
     {
     }
 
-    public function __invoke(string $studentId, array $data): Student
+    public function __invoke(string $studentId, array $data): ?Student
     {
         $student = ($this->updateStudentAction)($studentId, $data);
+        if (!$student) {
+            return null;
+        }
         $addingCoursesStatus = ($this->updateStudentCoursesAction)($student, $data['courses']);
 
         if ($addingCoursesStatus) {

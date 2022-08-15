@@ -6,5 +6,5 @@ use App\Models\Student;
 
 interface UpdateStudentActionContract
 {
-    public function __invoke(string $studentId, array $data): Student;
+    public function __invoke(string $studentId, array $data): ?Student;
 }
