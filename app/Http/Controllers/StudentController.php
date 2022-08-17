@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\CreateStudentGroupActionContract;
 use App\Contracts\UpdateStudentGroupActionContract;
+use App\DataTransferObjects\StudentData;
 use App\Filters\StudentFilter;
 use App\Http\Requests\StudentRequest;
 use App\Models\Course;
@@ -33,7 +34,8 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request, CreateStudentGroupActionContract $createStudentGroupAction): RedirectResponse
     {
-        $newStudent = $createStudentGroupAction($request->all());
+        $studentData =  StudentData::fromRequest($request);
+        $newStudent = $createStudentGroupAction($studentData);
         session()->flash(
             'message',
             "Student $newStudent->first_name $newStudent->last_name  was successfully added"
@@ -68,7 +70,8 @@ class StudentController extends Controller
         UpdateStudentGroupActionContract $updateStudentGroupAction
     ): RedirectResponse
     {
-        $updatedStudent = $updateStudentGroupAction($id, $request->all());
+        $studentData =  StudentData::fromRequest($request);
+        $updatedStudent = $updateStudentGroupAction($id, $studentData);
         session()->flash(
             'message',
             "Student $updatedStudent->first_name $updatedStudent->last_name  was successfully edited"

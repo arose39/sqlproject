@@ -5,6 +5,7 @@ namespace App\Actions\Student;
 use App\Contracts\AddStudentCoursesActionContract;
 use App\Contracts\CreateStudentActionContract;
 use App\Contracts\CreateStudentGroupActionContract;
+use App\DataTransferObjects\StudentData;
 use App\Models\Student;
 
 class CreateStudentGroupAction implements CreateStudentGroupActionContract
@@ -16,10 +17,10 @@ class CreateStudentGroupAction implements CreateStudentGroupActionContract
     {
     }
 
-    public function __invoke(array $data): Student
+    public function __invoke(StudentData $data): Student
     {
         $student = ($this->createStudentAction)($data);
-        ($this->addCoursesToStudentAction)($student, $data['courses']);
+        ($this->addCoursesToStudentAction)($student, $data->courses);
 
         return $student;
     }

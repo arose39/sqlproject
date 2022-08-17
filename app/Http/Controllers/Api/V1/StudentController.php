@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Contracts\CreateStudentGroupActionContract;
 use App\Contracts\UpdateStudentGroupActionContract;
+use App\DataTransferObjects\StudentData;
 use App\Filters\StudentFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
@@ -24,7 +25,8 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request, CreateStudentGroupActionContract $createStudentGroupAction): JsonResponse
     {
-        $newStudent = $createStudentGroupAction($request->all());
+        $studentData =  StudentData::fromRequest($request);
+        $newStudent = $createStudentGroupAction($studentData);
         if ($newStudent) {
             return (new ShowOneStudentResource($newStudent))
                 ->response()
@@ -45,7 +47,8 @@ class StudentController extends Controller
         UpdateStudentGroupActionContract $updateStudentGroupAction
     ): JsonResponse
     {
-        $updatedStudent = $updateStudentGroupAction($id, $request->all());
+        $studentData =  StudentData::fromRequest($request);
+        $updatedStudent = $updateStudentGroupAction($id, $studentData);
         if ($updatedStudent) {
             return (new ShowOneStudentResource($updatedStudent))
                 ->response()

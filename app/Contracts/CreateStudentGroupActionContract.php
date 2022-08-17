@@ -2,9 +2,10 @@
 
 namespace App\Contracts;
 
+use App\DataTransferObjects\StudentData;
 use App\Models\Student;
 
 interface CreateStudentGroupActionContract
 {
-    public function __invoke(array $data): Student;
+    public function __invoke(StudentData $data): Student;
 }

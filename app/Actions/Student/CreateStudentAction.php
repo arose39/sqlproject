@@ -3,16 +3,17 @@
 namespace App\Actions\Student;
 
 use App\Contracts\CreateStudentActionContract;
+use App\DataTransferObjects\StudentData;
 use App\Models\Student;
 
 class CreateStudentAction implements CreateStudentActionContract
 {
-    public function __invoke(array $data): Student
+    public function __invoke(StudentData $data): Student
     {
         $newStudent = new Student;
-        $newStudent->first_name = $data['first_name'];
-        $newStudent->last_name = $data['last_name'];
-        $newStudent->group_id = $data['group'];
+        $newStudent->first_name = $data->firstName;
+        $newStudent->last_name = $data->lastName;
+        $newStudent->group_id = $data->groupId;
         $newStudent->save();
 
         return $newStudent;
