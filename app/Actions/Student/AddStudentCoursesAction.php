@@ -8,7 +8,7 @@ use App\Models\StudentCourse;
 
 class AddStudentCoursesAction implements AddStudentCoursesActionContract
 {
-    public function __invoke(Student $student, array $courses): bool
+    public function __invoke(Student $student, array $courses): void
     {
         foreach ($courses as $course) {
             $studentCourse = new StudentCourse;
@@ -16,7 +16,5 @@ class AddStudentCoursesAction implements AddStudentCoursesActionContract
             $studentCourse->course_id = $course;
             $studentCourse->save();
         }
-
-        return true;
     }
 }

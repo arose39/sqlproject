@@ -6,5 +6,5 @@ use App\Models\Student;
 
 interface AddStudentCoursesActionContract
 {
-    public function __invoke(Student $student, array $courses): bool;
+    public function __invoke(Student $student, array $courses): void;
 }

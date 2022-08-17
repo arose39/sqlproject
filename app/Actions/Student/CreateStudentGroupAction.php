@@ -19,11 +19,8 @@ class CreateStudentGroupAction implements CreateStudentGroupActionContract
     public function __invoke(array $data): Student
     {
         $student = ($this->createStudentAction)($data);
-        $addingCoursesStatus = ($this->addCoursesToStudentAction)($student, $data['courses']);
+        ($this->addCoursesToStudentAction)($student, $data['courses']);
 
-        if ($addingCoursesStatus) {
-            return $student;
-        }
-
+        return $student;
     }
 }

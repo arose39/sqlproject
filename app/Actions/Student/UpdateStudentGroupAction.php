@@ -22,10 +22,8 @@ class UpdateStudentGroupAction implements UpdateStudentGroupActionContract
         if (!$student) {
             return null;
         }
-        $addingCoursesStatus = ($this->updateStudentCoursesAction)($student, $data['courses']);
+        ($this->updateStudentCoursesAction)($student, $data['courses']);
 
-        if ($addingCoursesStatus) {
             return $student;
-        }
     }
 }
