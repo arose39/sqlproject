@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class StudentFilter extends QueryFilter
 {
-
+    //Именую методы снейк кейсом, т.к. их имена должны соответвовать именам параметров из запроса
     public function search_first_name(string $search_string = ''): Builder
     {
         return $this->builder

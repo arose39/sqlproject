@@ -12,6 +12,7 @@ use App\Http\Resources\ShowOneStudentResource;
 use App\Http\Resources\StudentCollection;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 
 class StudentController extends Controller
@@ -25,15 +26,15 @@ class StudentController extends Controller
 
     public function store(StudentRequest $request, CreateStudentGroupActionContract $createStudentGroupAction): JsonResponse
     {
-        $studentData =  StudentData::fromRequest($request);
+        $studentData = StudentData::fromRequest($request);
         $newStudent = $createStudentGroupAction($studentData);
         if ($newStudent) {
             return (new ShowOneStudentResource($newStudent))
                 ->response()
-                ->setStatusCode(201);
-        } else {
-            return new JsonResponse('error to adding new student', 507);
+                ->setStatusCode(Response::HTTP_CREATED);
         }
+
+        return new JsonResponse('error to adding new student', Response::HTTP_NOT_IMPLEMENTED);
     }
 
     public function show(Student $student): ShowOneStudentResource
@@ -47,21 +48,21 @@ class StudentController extends Controller
         UpdateStudentGroupActionContract $updateStudentGroupAction
     ): JsonResponse
     {
-        $studentData =  StudentData::fromRequest($request);
+        $studentData = StudentData::fromRequest($request);
         $updatedStudent = $updateStudentGroupAction($id, $studentData);
         if ($updatedStudent) {
             return (new ShowOneStudentResource($updatedStudent))
                 ->response()
-                ->setStatusCode(201);
-        } else {
-            return new JsonResponse('Error updating new student or student not found', 507);
+                ->setStatusCode(Response::HTTP_CREATED);
         }
+
+        return new JsonResponse('Error updating new student or student not found', Response::HTTP_NOT_IMPLEMENTED);
     }
 
     public function destroy(Student $student): JsonResponse
     {
         if ($student->delete()) {
-            return new JsonResponse('Student was deleted', 201);
+            return new JsonResponse('Student was deleted', Response::HTTP_OK);
         }
     }
 }

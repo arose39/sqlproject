@@ -80,7 +80,7 @@ class StudentController extends Controller
         return redirect()->route('students.index');
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy(string $id): RedirectResponse
     {
         Student::find($id)->delete();
         session()->flash('message', "Student $id was successfully deleted");
